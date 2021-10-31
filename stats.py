@@ -1,14 +1,19 @@
-def bestWay(ways):
+def bestPath(paths):
     print("moyenne des chemins")
-    for way in ways:
-        print(average(way))
+    ordPaths = []
+    for path in paths:
+        ordPaths.append(average(path))
 
+    ordPaths.sort(key = lambda x: x[1])
+    return ordPaths
 
-
-def average(way):
+def average(path):
     dist = 0
-    for i in way:
-        dist += i["distance"]
+    code = ""
+    for i in path:
+        dist += i.distance
+        code += i.code
 
-    dist /= len(way)
-    return dist;
+    dist /= len(path)
+    print(dist)
+    return (code, dist)

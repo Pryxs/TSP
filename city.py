@@ -1,10 +1,11 @@
 import math
 
 class City:
-    def __init__(self, x, y, name):
+    def __init__(self, x, y, name, code):
         self.name = name
         self.x = x
         self.y = y
+        self.code = code
 
     # retourne la distance euclidienne entre 2 villes (valeur absolue)
     def distance(self, city):
