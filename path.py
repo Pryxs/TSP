@@ -3,4 +3,4 @@ class Path:
         self.startCity = startCity
         self.arrivalCity = arrivalCity
         self.distance = startCity.distance(arrivalCity)
-        self.code = startCity.code + arrivalCity.code
+        self.code = [startCity.code, arrivalCity.code]

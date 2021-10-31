@@ -2,13 +2,15 @@ import random
 
 import city, path, encoding
 
-names = ["Pékin", "Paris", "Londres", "Kaboul", "Berlin", "Camberra"]
+names = ["Pékin", "Paris", "Londres", "Kaboul", "Berlin", "Canberra", "Vienne", "Séoul", "Madrid", "Budapest",
+"Rome", "Tokyo", "Mexico", "Moscou", "Bangkok"]
 cities = []
+
 
 # créations des villes
 def initCities(nb):
     for x in range(nb):
-        cityInstance = city.City(random.randint(0, 10), random.randint(0, 10), names[x], encoding.decimalToBinary(x))
+        cityInstance = city.City(random.randint(0, 10), random.randint(0, 10), names[x], x)
         cities.append(cityInstance)
 
     return cities
@@ -16,6 +18,7 @@ def initCities(nb):
 
 # génération de chemins aléatoire
 def generateRandomPath(cities, nb, startCity):
+    print("Ville départ : " , startCity.name)
     randomPaths = []
 
     for x in range(nb):
@@ -26,7 +29,6 @@ def generateRandomPath(cities, nb, startCity):
                 break
 
         randomPath = []
-        print("Ville départ : " , startCity.name)
         
 
         for x in range(len(tempCities)):
