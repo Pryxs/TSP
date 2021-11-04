@@ -8,6 +8,8 @@ def bestPath(paths):
         ordPaths.append(average(path))
 
     ordPaths.sort(key = lambda x: x[1])
+    for i in ordPaths:
+        print(i)
     return ordPaths
 
 
@@ -19,25 +21,25 @@ def average(path):
         code.append(i.code[0])
 
 
-    dist /= len(path)
-    print("dist" ,dist)
+    # dist /= len(path)
+    # print("dist" ,dist)
     return (code, dist)
 
 
 def generateNewPopulation(population):
     populationLength = len(population)
     selectedPath = []
-    # récupère les 40% top solutions
-    for i in range(int((len(population) / 100) * 40)):
+    # récupère les 60% top solutions
+    for i in range(int((populationLength / 100) * 60)):
         selectedPath.append(population[0])
         population.remove(population[0])
 
 
     # récupère les 20% de solutions aléatoirement dans le reste
-    for i in range(int((len(population) / 100) * 20)):
-        indexPath = random.randint(0, len(population))
+    for i in range(int((populationLength / 100) * 20)):
+        indexPath = random.randint(0, len(population) - 1)
         selectedPath.append(population[indexPath])
         population.remove(population[indexPath])
         
-
+    
     crossedPopulation = crossover.crossesPopulation(selectedPath, populationLength)

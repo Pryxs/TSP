@@ -5,10 +5,10 @@ import population
 import crossover
 
 # création de n villes
-cities = init.initCities(12)
+cities = init.initCities(9)
 
 # création de n chemins sur une ville de départ aléatoire
-randomPaths = init.generateRandomPath(cities, 9, random.choice(cities))
+randomPaths = init.generateRandomPath(cities, 10, random.choice(cities))
 
 # ordonne les meilleurs chemins
 ordPaths = population.bestPath(randomPaths)

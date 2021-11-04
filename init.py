@@ -1,9 +1,10 @@
 import random
-
+import json
 import city, path, encoding
 
-names = ["Pékin", "Paris", "Londres", "Kaboul", "Berlin", "Canberra", "Vienne", "Séoul", "Madrid", "Budapest",
-"Rome", "Tokyo", "Mexico", "Moscou", "Bangkok"]
+with open('cities.json') as f:
+    names = json.load(f)['names']
+
 cities = []
 
 
