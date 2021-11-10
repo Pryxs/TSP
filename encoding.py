@@ -1,3 +1,5 @@
+import path
+
 # 15 ville max
 def decimalToBinary(n): 
     if n > 15:
@@ -10,5 +12,23 @@ def decimalToBinary(n):
         return binary
 
 
-def pathToVector(path):
-    print(len(path))
+def vectorToObject(arrayPath, cities):
+    convertedPaths = []
+    for i in arrayPath:
+        convertedPath = []
+        for element in i:
+            convertedPath.append(cities[element])
+
+
+        convertedPath.append(convertedPath[0])
+        newCovertedPath = []
+        for i in range(int(len(convertedPath) - 1)):
+            print('depart : ', convertedPath[i].name)
+            print('arrivé : ', convertedPath[i + 1].name , '\n')
+            newPath = path.Path(convertedPath[i], convertedPath[i + 1])
+            newCovertedPath.append(newPath)
+
+
+        convertedPaths.append(newCovertedPath)
+
+    return convertedPaths

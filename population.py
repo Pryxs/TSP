@@ -1,5 +1,6 @@
 import random
 import crossover
+import init
 
 def bestPath(paths):
     print("moyenne des chemins")
@@ -26,7 +27,7 @@ def average(path):
     return (code, dist)
 
 
-def generateNewPopulation(population):
+def generateNewPopulation(population, startCity, cities):
     populationLength = len(population)
     selectedPath = []
     # récupère les 60% top solutions
@@ -43,3 +44,10 @@ def generateNewPopulation(population):
         
     
     crossedPopulation = crossover.crossesPopulation(selectedPath, populationLength)
+    print("on complete avec ", populationLength - int(len(crossedPopulation)) , " random path")
+    fillPopulationWithRandom = bestPath(init.generateRandomPath(cities, populationLength - int(len(crossedPopulation)), startCity))
+
+    for path in fillPopulationWithRandom:
+        crossedPopulation.append(path[0])
+
+    return crossedPopulation

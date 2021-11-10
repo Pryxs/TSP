@@ -11,10 +11,13 @@ cities = []
 # créations des villes
 def initCities(nb):
     for x in range(nb):
-        cityInstance = city.City(random.randint(0, 10), random.randint(0, 10), names[x], x)
+        cityInstance = city.City(random.randint(0, 100), random.randint(0, 100), names[x], x)
         cities.append(cityInstance)
 
     return cities
+
+# def noRadomCity():
+#     cities.append(city.City(0, , names[x], x)
 
 
 # génération de chemins aléatoire
