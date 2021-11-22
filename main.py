@@ -8,16 +8,17 @@ import json
 import numpy
 
 # création de n villes
-cities = init.initCities(5)
+# cities = init.initCities(12)
 # startCity = random.choice(cities)
+cities = init.noRandomCity()
 startCity = cities[0]
 
-
 # création de n chemins sur une ville de départ aléatoire
-randomPaths = init.generateRandomPath(cities, 10, startCity)
+randomPaths = init.generateRandomPath(cities, 30, startCity)
 
 
-for i in range (2):
+for i in range (50):
+    print(i)
     # ordonne les meilleurs chemins
     ordPaths = population.bestPath(randomPaths)
     jsonwriter.savePopulation(ordPaths)
@@ -28,6 +29,17 @@ for i in range (2):
     # converti au bon format objet
     finalPopulation = encoding.vectorToObject(newPaths, cities)
     randomPaths = finalPopulation
+
+    # newPaths = [ordPaths[0][0]]
+    # generatePath = population.bestPath(init.generateRandomPath(cities, 39, startCity))
+    # for path in generatePath:
+    #     newPaths.append(path[0])
+
+    # randomPaths = encoding.vectorToObject(newPaths, cities)
+
+
+
+
 
 
 with open('results.json') as f:
@@ -52,10 +64,9 @@ with open('results.json') as f:
     plt.title("Occurence/meilleur chemin")
     plt.show()
 
-    plt.plot(counts, values)
-    plt.title("Occurence/moyenne")
-    plt.show()
-
+#     plt.plot(counts, values)
+#     plt.title("Occurence/moyenne")
+#     plt.show()
 
 ### DEBUG ###
 

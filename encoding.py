@@ -23,8 +23,8 @@ def vectorToObject(arrayPath, cities):
         convertedPath.append(convertedPath[0])
         newCovertedPath = []
         for i in range(int(len(convertedPath) - 1)):
-            print('depart : ', convertedPath[i].name)
-            print('arrivé : ', convertedPath[i + 1].name , '\n')
+            # print('depart : ', convertedPath[i].name)
+            # print('arrivé : ', convertedPath[i + 1].name , '\n')
             newPath = path.Path(convertedPath[i], convertedPath[i + 1])
             newCovertedPath.append(newPath)
 

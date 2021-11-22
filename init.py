@@ -16,8 +16,23 @@ def initCities(nb):
 
     return cities
 
-# def noRadomCity():
-#     cities.append(city.City(0, , names[x], x)
+def noRandomCity():
+    cities.append(city.City(0, 0, names[0], 0))
+    cities.append(city.City(20, 6, names[1], 1))
+    cities.append(city.City(36, 3, names[2], 2))
+    cities.append(city.City(42, 30, names[3], 3))
+    cities.append(city.City(30, 24, names[4], 4))
+    cities.append(city.City(16, 40, names[5], 5))
+    cities.append(city.City(6, 34, names[6], 6))
+    cities.append(city.City(22, 28, names[7], 7))
+    cities.append(city.City(2, 26, names[8], 8))
+    cities.append(city.City(18, 14, names[9], 9))
+
+    # cities.append(city.City(12, 50, names[10], 10))
+    # cities.append(city.City(50, 16, names[11], 11))
+    # cities.append(city.City(25, 25, names[12], 12))
+    return cities
+
 
 
 # génération de chemins aléatoire

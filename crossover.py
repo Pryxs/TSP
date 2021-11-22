@@ -1,7 +1,36 @@
 import random
 import numpy as np
 
-def crossesPopulation(population, maxPopulation):
+def crossesPopulation2(population):
+    crossParents = []
+    crossesPopulation = []
+    probabilities = getProbabilities(population) # emet des probabilités selon le rang des individus
+    population.sort(key = lambda x: x[1])
+
+    # on garde le meilleur (convergence plus rapide)
+    crossesPopulation.append(population[0][0])
+
+    for i in range(int(len(population)/100 * 70) - 1):
+        parent1 = getIndividu(population, probabilities)
+        parent2 = getIndividu(population, probabilities)
+
+        while(parent1 == parent2 or not crossoverCheck(crossParents, parent1, parent2)):
+            parent2 = getIndividu(population, probabilities)
+
+
+        crossParents.append((parent1[0], parent2[0]))
+
+    
+    for couple in crossParents:
+        indexCut = random.randint(int(len(couple[0]) / 4), (int(len(couple[0]) - int(len(couple[0]) / 4))) - 1)
+        child = crossPaths(couple, indexCut)
+        crossesPopulation.append(child)
+
+    
+    return crossesPopulation
+
+
+def crossesPopulation(population):
     crossParents = []
     crossesPopulation = []
     probabilities = getProbabilities(population) # emet des probabilités selon le rang des individus
@@ -34,42 +63,43 @@ def crossesPopulation(population, maxPopulation):
             # test = crossoverCheck(crossParents, parent1, parent2)
             # print(test)
             crossParents.append((parent1[0], parent2[0]))
-            print("\n")
-            print("parent choisi : " , parent1)
-            print("parent choisi : " , parent2)
+            # print("\n")
+            # print("parent choisi : " , parent1)
+            # print("parent choisi : " , parent2)
 
         
-    print("\n sur ", len(population) , " : " , count , " croisements \n\n")
+    # print("\n sur ", len(population) , " : " , count , " croisements \n\n")
 
     
-    print("\n LISTE DES CROISEMENTS")
-    for i in crossParents:
-        print(i)
+    # print("\n LISTE DES CROISEMENTS")
+    # for i in crossParents:
+    #     print(i)
 
     
     for couple in crossParents:
         indexCut = random.randint(int(len(couple[0]) / 4), (int(len(couple[0]) - int(len(couple[0]) / 4))) - 1)
         child1 = crossPaths(couple, indexCut)
-        child2 = crossPaths(couple[::-1], indexCut)
-        print("child1 : ",child1)
-        print("child2 :" ,child2)
+        child2 = crossPaths(couple[::-1], indexCut) # inverse l'ordre du tuple
+        # print("child1 : ",child1)
+        # print("child2 :" ,child2)
         crossesPopulation.append(child1)
         crossesPopulation.append(child2)
 
     if(len(crossesPopulation) < len(population)):
-        print("on complète la population")
+        # print("on complète la population")
         crossesPopulation = fillPopulation(crossesPopulation, population)
 
 
-    print("LONGUEUR POPULATION APRES CROISEMENT : " , len(crossesPopulation))
-    print("+++++++++++++++++++++++++")
-    print(crossesPopulation)
+    # print("LONGUEUR POPULATION APRES CROISEMENT : " , len(crossesPopulation))
+    # print("+++++++++++++++++++++++++")
+    # print(crossesPopulation)
     return crossesPopulation
 
 
 def crossPaths(couple, indexCut):
+    # enfant est une copie du premier parent
     child = couple[0].copy()
-    print("\n on croise le couple", couple ,"sur la coupure : ", indexCut)
+    # print("\n on croise le couple", couple ,"sur la coupure : ", indexCut)
     
     firstPart1 = couple[0][:indexCut]
     secondPart1 = couple[0][-(len(couple[0]) - indexCut):]
@@ -77,19 +107,42 @@ def crossPaths(couple, indexCut):
     firstPart2 = couple[1][:indexCut]
     secondPart2 = couple[1][-(len(couple[1]) - indexCut):]
 
-    print(firstPart1, secondPart1)
-    print(firstPart2, secondPart2)
+    # print(firstPart1, secondPart1)
+    # print(firstPart2, secondPart2)
 
+    # pour chaque element dans le 2e parent (avant césure)
     for i in range(len(firstPart2)):
-        changedCity = child[i]
-        broughtCity = firstPart2[i]
+        changedCity = child[i] # ville changé
+        broughtCity = firstPart2[i] # ville apporté
 
+        # on check si la ville qu'on va rapporté existe dans la 2 partie de l'enfant (copie parent1)
         cityExistInSecondPart = elementInList(child, broughtCity)
+
+        # si c'est le cas on remplace cette ville par la ville changé
         if cityExistInSecondPart:
             child[int(cityExistInSecondPart)] = changedCity
 
+        # puis on remplace la ville changé par la ville apporté
         child[i] = firstPart2[i]
 
+    # taux de mutation
+    if random.uniform(0, 1) < 0.2:
+        child = mutation(child)
+
+
+    return child
+
+
+def mutation(child):
+    rand = random.randint(1, int(len(child)) - 1)
+    rand2 = random.randint(1, int(len(child)) - 1)
+
+    switch = child[rand]
+    switch2 = child[rand2]
+
+    child[rand] = switch2
+    child[rand2] = switch
+    
     return child
 
 
@@ -145,7 +198,7 @@ def elementInList(list, element):
 
 
 def fillPopulation(crossesPopulation, population):
-    print(len(crossesPopulation), " : " , len(population))
+    # print(len(crossesPopulation), " : " , len(population))
     for i in range(int(len(population)) - int(len(crossesPopulation))):
         crossesPopulation.append(population[i + 1][0])
 

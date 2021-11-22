@@ -3,14 +3,14 @@ import crossover
 import init
 
 def bestPath(paths):
-    print("moyenne des chemins")
+    # print("moyenne des chemins")
     ordPaths = []
     for path in paths:
         ordPaths.append(average(path))
 
     ordPaths.sort(key = lambda x: x[1])
-    for i in ordPaths:
-        print(i)
+    # for i in ordPaths:
+        # print(i)
     return ordPaths
 
 
@@ -43,11 +43,12 @@ def generateNewPopulation(population, startCity, cities):
         population.remove(population[indexPath])
         
     
-    crossedPopulation = crossover.crossesPopulation(selectedPath, populationLength)
-    print("on complete avec ", populationLength - int(len(crossedPopulation)) , " random path")
+    crossedPopulation = crossover.crossesPopulation(selectedPath)
+    # print("on complete avec ", populationLength - int(len(crossedPopulation)) , " random path")
     fillPopulationWithRandom = bestPath(init.generateRandomPath(cities, populationLength - int(len(crossedPopulation)), startCity))
 
     for path in fillPopulationWithRandom:
         crossedPopulation.append(path[0])
+
 
     return crossedPopulation
