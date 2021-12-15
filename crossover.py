@@ -1,6 +1,7 @@
 import random
 import numpy as np
 
+# cross pop, get 1 child
 def crossesPopulation2(population):
     crossParents = []
     crossesPopulation = []
@@ -20,7 +21,6 @@ def crossesPopulation2(population):
 
         crossParents.append((parent1[0], parent2[0]))
 
-    
     for couple in crossParents:
         indexCut = random.randint(int(len(couple[0]) / 4), (int(len(couple[0]) - int(len(couple[0]) / 4))) - 1)
         child = crossPaths(couple, indexCut)
@@ -38,7 +38,6 @@ def crossesPopulation(population):
 
     # on garde le meilleur (convergence plus rapide)
     crossesPopulation.append(population[0][0])
-    # population.remove(population[0])
 
     # on croise la population avec une proba de 0.7
     count = 0
@@ -47,68 +46,41 @@ def crossesPopulation(population):
     for i in range(int(len(population) / 2)):
         if random.uniform(0, 1) < 0.7:
             count += 1
+
+            # on selectionne 2 individus
             parent1 = getIndividu(population, probabilities)
             parent2 = getIndividu(population, probabilities)
-            # print("parent1 : ", parent1[0])
-            # print("parent2 : ", parent2[0])
 
-            # vérifie que les parents sont différent
+            # vérifie que les parents sont différents
             while(parent1 == parent2 or not crossoverCheck(crossParents, parent1, parent2)):
-                # if parent1 == parent2:
-                    # print("parents identique")
                 parent2 = getIndividu(population, probabilities)
-                # print("nouvel individu parent2 : ", parent2[0])
 
-
-            # test = crossoverCheck(crossParents, parent1, parent2)
-            # print(test)
             crossParents.append((parent1[0], parent2[0]))
-            # print("\n")
-            # print("parent choisi : " , parent1)
-            # print("parent choisi : " , parent2)
-
-        
-    # print("\n sur ", len(population) , " : " , count , " croisements \n\n")
 
     
-    # print("\n LISTE DES CROISEMENTS")
-    # for i in crossParents:
-    #     print(i)
-
-    
+    # on croise nos couples d'individus
     for couple in crossParents:
         indexCut = random.randint(int(len(couple[0]) / 4), (int(len(couple[0]) - int(len(couple[0]) / 4))) - 1)
         child1 = crossPaths(couple, indexCut)
         child2 = crossPaths(couple[::-1], indexCut) # inverse l'ordre du tuple
-        # print("child1 : ",child1)
-        # print("child2 :" ,child2)
         crossesPopulation.append(child1)
         crossesPopulation.append(child2)
 
+
+    print(len(crossesPopulation))
     if(len(crossesPopulation) < len(population)):
-        # print("on complète la population")
+        # on complete la population
         crossesPopulation = fillPopulation(crossesPopulation, population)
 
 
-    # print("LONGUEUR POPULATION APRES CROISEMENT : " , len(crossesPopulation))
-    # print("+++++++++++++++++++++++++")
-    # print(crossesPopulation)
     return crossesPopulation
 
 
+# croise un couple de parent
 def crossPaths(couple, indexCut):
     # enfant est une copie du premier parent
     child = couple[0].copy()
-    # print("\n on croise le couple", couple ,"sur la coupure : ", indexCut)
-    
-    firstPart1 = couple[0][:indexCut]
-    secondPart1 = couple[0][-(len(couple[0]) - indexCut):]
-
     firstPart2 = couple[1][:indexCut]
-    secondPart2 = couple[1][-(len(couple[1]) - indexCut):]
-
-    # print(firstPart1, secondPart1)
-    # print(firstPart2, secondPart2)
 
     # pour chaque element dans le 2e parent (avant césure)
     for i in range(len(firstPart2)):
@@ -126,13 +98,14 @@ def crossPaths(couple, indexCut):
         child[i] = firstPart2[i]
 
     # taux de mutation
-    if random.uniform(0, 1) < 0.2:
+    if random.uniform(0, 1) < 0.01:
         child = mutation(child)
 
 
     return child
 
 
+# éffectue une mutation sur un individu
 def mutation(child):
     rand = random.randint(1, int(len(child)) - 1)
     rand2 = random.randint(1, int(len(child)) - 1)
@@ -146,6 +119,7 @@ def mutation(child):
     return child
 
 
+# ajoute des probabilités aux individus de la population
 def getProbabilities(population):
     population.reverse()
     probabilities = np.geomspace(1,30,num=len(population))
@@ -163,13 +137,13 @@ def getProbabilities(population):
         adjustedProbabilities.append(adjustedProbabilities[index] - probabilities[i])
         index += 1
 
-
     adjustedProbabilities.remove(adjustedProbabilities[len(adjustedProbabilities) - 1])
     adjustedProbabilities.remove(1)
     adjustedProbabilities.append(0)
     return adjustedProbabilities
 
 
+# sélectione un individu selon ses probabilités
 def getIndividu(population, probabilities):
     rand = random.uniform(0, 1)
     for x in probabilities:
@@ -189,6 +163,7 @@ def crossoverCheck(crossParents, parent1, parent2):
         return True
 
 
+# vérifie si un élément existe dans la liste
 def elementInList(list, element):
     for i in range(len(list)):
         if list[i] == element:
@@ -198,23 +173,8 @@ def elementInList(list, element):
 
 
 def fillPopulation(crossesPopulation, population):
-    # print(len(crossesPopulation), " : " , len(population))
     for i in range(int(len(population)) - int(len(crossesPopulation))):
         crossesPopulation.append(population[i + 1][0])
 
 
-        
     return crossesPopulation
-
-
-# def ordPorbabilities(probabilities):
-#     ordPorbabilities = []
-#     for x in range(len(probabilities) - 1, -1, -1):
-#         ordPorbabilities.append(probabilities[x])
-
-#     return ordPorbabilities
-    
-
-# import matplotlib.pyplot as plt
-# plt.pie(test, normalize = True)
-# plt.show()

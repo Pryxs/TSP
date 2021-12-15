@@ -6,7 +6,13 @@ import encoding
 import jsonwriter
 import json
 import numpy
+import os
 
+
+os.remove("results.json")
+with open('results.json', 'w') as f: 
+    json.dump({"list" : []}, f)
+    pass
 # création de n villes
 # cities = init.initCities(12)
 # startCity = random.choice(cities)
@@ -17,7 +23,8 @@ startCity = cities[0]
 randomPaths = init.generateRandomPath(cities, 30, startCity)
 
 
-for i in range (50):
+
+for i in range (10):
     print(i)
     # ordonne les meilleurs chemins
     ordPaths = population.bestPath(randomPaths)
@@ -29,17 +36,6 @@ for i in range (50):
     # converti au bon format objet
     finalPopulation = encoding.vectorToObject(newPaths, cities)
     randomPaths = finalPopulation
-
-    # newPaths = [ordPaths[0][0]]
-    # generatePath = population.bestPath(init.generateRandomPath(cities, 39, startCity))
-    # for path in generatePath:
-    #     newPaths.append(path[0])
-
-    # randomPaths = encoding.vectorToObject(newPaths, cities)
-
-
-
-
 
 
 with open('results.json') as f:
@@ -77,13 +73,8 @@ with open('results.json') as f:
 #     print("code : ", path.code)
 #     print("===========================")
 
-# feedback des chemins
+# # feedback des chemins
 # for i in randomPaths:
 #     print("\n\n")
 #     for j in i:
 #         printPath(j)
-
-
-# feedback du poids des chemins
-# print("\n\n")
-# print(ordPaths)
