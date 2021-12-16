@@ -31,6 +31,7 @@ def crossesPopulation2(population):
 
 
 def crossesPopulation(population):
+    print("\n\n Population sélectionné : " , population)
     crossParents = []
     crossesPopulation = []
     probabilities = getProbabilities(population) # emet des probabilités selon le rang des individus
@@ -57,7 +58,7 @@ def crossesPopulation(population):
 
             crossParents.append((parent1[0], parent2[0]))
 
-    
+    print("\n\n Couple de parents : " , crossParents)
     # on croise nos couples d'individus
     for couple in crossParents:
         indexCut = random.randint(int(len(couple[0]) / 4), (int(len(couple[0]) - int(len(couple[0]) / 4))) - 1)
@@ -67,12 +68,12 @@ def crossesPopulation(population):
         crossesPopulation.append(child2)
 
 
-    print(len(crossesPopulation))
+    print("\n\n Population croisée : " ,crossesPopulation)
     if(len(crossesPopulation) < len(population)):
         # on complete la population
         crossesPopulation = fillPopulation(crossesPopulation, population)
 
-
+    print("\n\n Population rempli avec les meilleurs parents : " ,crossesPopulation)
     return crossesPopulation
 
 
@@ -140,6 +141,7 @@ def getProbabilities(population):
     adjustedProbabilities.remove(adjustedProbabilities[len(adjustedProbabilities) - 1])
     adjustedProbabilities.remove(1)
     adjustedProbabilities.append(0)
+    print("\n\n Probabilités ajustées : " , adjustedProbabilities)
     return adjustedProbabilities
 
 

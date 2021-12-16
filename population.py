@@ -50,5 +50,5 @@ def generateNewPopulation(population, startCity, cities):
     for path in fillPopulationWithRandom:
         crossedPopulation.append(path[0])
 
-
+    print("\n\n Regénère le reste de la population : ", crossedPopulation)
     return crossedPopulation
